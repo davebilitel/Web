@@ -1,0 +1,30 @@
+{
+  "short_name": "Virtual Cards",
+  "name": "Virtual Services Cards",
+  "description": "Secure virtual cards for online payments",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "64x64",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "logo192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "logo512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#1a73e8",
+  "background_color": "#ffffff",
+  "orientation": "portrait",
+  "prefer_related_applications": false
+} 

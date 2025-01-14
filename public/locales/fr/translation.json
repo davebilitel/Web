@@ -1,0 +1,52 @@
+{
+    "nav": {
+        "home": "Accueil",
+        "about": "À Propos",
+        "contact": "Contact"
+    },
+    "hero": {
+        "title": "Cartes Virtuelles Simplifiées",
+        "subtitle": "Accédez instantanément à des cartes virtuelles sécurisées pour vos paiements en ligne",
+        "getStarted": "Commencer"
+    },
+    "features": {
+        "title": "Pourquoi Choisir Nos Cartes?",
+        "subtitle": "Découvrez le meilleur des services de cartes virtuelles",
+        "global": "Accès Global",
+        "secure": "Transactions Sécurisées",
+        "instant": "Livraison Instantanée"
+    },
+    "card": {
+        "validThru": "VALABLE JUSQU'AU",
+        "viewCvv": "Voir CVV Example",
+        "backToFront": "Retour"
+    },
+    "common": {
+        "loading": "Chargement...",
+        "error": "Une erreur est survenue",
+        "success": "Succès",
+        "tryAgain": "Réessayer",
+        "contactSupport": "Contacter le Support"
+    },
+    "footer": {
+        "company": "Entreprise",
+        "products": "Produits",
+        "support": "Support",
+        "terms": "Conditions d'utilisation",
+        "privacy": "Politique de confidentialité",
+        "mastercard": "Mastercard",
+        "visacard": "Carte Visa",
+        "faq": "FAQ",
+        "help": "Centre d'aide"
+    },
+    "payment": {
+        "failed": {
+            "title": "Paiement échoué",
+            "message": "Nous n'avons pas pu traiter votre paiement. Veuillez réessayer ou contacter le support si le problème persiste."
+        },
+        "success": {
+            "title": "Paiement réussi",
+            "message": "Votre paiement a été traité avec succès."
+        }
+    }
+} 

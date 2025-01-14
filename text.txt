@@ -1,0 +1,1 @@
+Show a Pop Up that says you will receive your balance in your email inbox in less than a minute. when they click the balance

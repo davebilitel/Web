@@ -1,0 +1,431 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom animations */
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+.animate-shimmer {
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.2) 50%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+}
+
+/* Glass morphism */
+.glass {
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.125);
+}
+
+/* Smooth transitions */
+.transition-all {
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+}
+
+/* Card hover effects */
+.hover-lift {
+    transition: transform 0.2s ease;
+}
+
+.hover-lift:hover {
+    transform: translateY(-5px);
+}
+
+/* Card 3D effects */
+.perspective-1000 {
+    perspective: 1000px;
+}
+
+.transform-style-3d {
+    transform-style: preserve-3d;
+}
+
+.backface-hidden {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+.rotate-y-180 {
+    transform: rotateY(180deg);
+}
+
+/* Card container styles */
+.card-container {
+    transition: transform 0.3s ease;
+}
+
+.card-container:hover {
+    transform: translateY(-5px);
+}
+
+/* Card shine effect */
+.card-shine {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.25) 0%,
+        rgba(255, 255, 255, 0) 60%
+    );
+    pointer-events: none;
+}
+
+.preserve-3d {
+    transform-style: preserve-3d;
+}
+
+.backface-hidden {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+/* Add these to your existing CSS */
+@keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.animated-gradient {
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+}
+
+.perspective-1000 {
+    perspective: 1000px;
+}
+
+.card-container {
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+.card-front,
+.card-back {
+    backface-visibility: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.card-back {
+    transform: rotateY(180deg);
+}
+
+/* Add these to your existing animations */
+@keyframes float {
+  0% {
+    transform: translateY(0) translateX(0);
+  }
+  50% {
+    transform: translateY(-10px) translateX(10px);
+  }
+  100% {
+    transform: translateY(0) translateX(0);
+  }
+}
+
+.background-animation {
+  animation: float 10s ease-in-out infinite;
+}
+
+.gradient-bg {
+  background: linear-gradient(-45deg, #ff6b6b, #4ecdc4, #45b7d1);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 0.1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.2;
+        transform: scale(1.05);
+    }
+    100% {
+        opacity: 0.1;
+        transform: scale(1);
+    }
+}
+
+/* Add these animations */
+@keyframes chipGlow {
+    0% {
+        filter: brightness(1) drop-shadow(0 0 2px rgba(255, 215, 0, 0.5));
+    }
+    50% {
+        filter: brightness(1.2) drop-shadow(0 0 4px rgba(255, 215, 0, 0.7));
+    }
+    100% {
+        filter: brightness(1) drop-shadow(0 0 2px rgba(255, 215, 0, 0.5));
+    }
+}
+
+@keyframes magneticStripeHover {
+    0% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 100% 50%;
+    }
+}
+
+.chip-animation {
+    animation: chipGlow 2s ease-in-out infinite;
+}
+
+.magnetic-stripe {
+    background: linear-gradient(
+        90deg,
+        rgba(32, 32, 32, 1) 0%,
+        rgba(64, 64, 64, 1) 50%,
+        rgba(32, 32, 32, 1) 100%
+    );
+    background-size: 200% 100%;
+    transition: all 0.3s ease;
+}
+
+.magnetic-stripe:hover {
+    animation: magneticStripeHover 1.5s linear infinite;
+}
+
+@layer utilities {
+    .perspective-1000 {
+        perspective: 1000px;
+    }
+}
+
+/* Add these optimizations */
+* {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+}
+
+/* Improve scrolling on iOS */
+body {
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Optimize font rendering */
+html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+/* Prevent text size adjustment on orientation change */
+html {
+    -webkit-text-size-adjust: 100%;
+}
+
+/* Add these utility classes to your CSS */
+.content-wrapper {
+    @apply flex-grow;
+}
+
+.section-padding {
+    @apply py-12 md:py-16;
+}
+
+.container-padding {
+    @apply px-4;
+}
+
+/* Add these CSS variables for safe area insets */
+:root {
+    --safe-area-inset-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.h-safe-area-inset-bottom {
+    height: var(--safe-area-inset-bottom);
+}
+
+/* Optional: Add this if you want to ensure content doesn't get hidden behind the sticky buttons */
+.pb-safe-area {
+    padding-bottom: calc(5rem + var(--safe-area-inset-bottom));
+}
+
+/* Add these to your existing CSS */
+@supports (padding: max(0px)) {
+    .sticky-bottom {
+        padding-bottom: max(1rem, env(safe-area-inset-bottom));
+    }
+}
+
+/* Smooth scrolling for the whole page */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Prevent overscroll bounce in iOS */
+body {
+    overscroll-behavior-y: none;
+}
+
+/* Add these performance optimizations */
+.hardware-accelerated {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000;
+    will-change: transform;
+}
+
+/* Reduce motion if user prefers */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* Optimize paint performance */
+.optimize-gpu {
+    transform: translate3d(0, 0, 0);
+}
+
+/* Layer promotion for animations */
+.promote-layer {
+    will-change: transform, opacity;
+}
+
+/* Accessibility-specific styles */
+.high-contrast {
+    --contrast-multiplier: 1.5;
+    filter: contrast(var(--contrast-multiplier));
+}
+
+/* Color blind modes */
+.protanopia {
+    filter: url('#protanopia-filter');
+}
+
+.deuteranopia {
+    filter: url('#deuteranopia-filter');
+}
+
+.tritanopia {
+    filter: url('#tritanopia-filter');
+}
+
+/* Focus indicators */
+.focus-visible:focus {
+    outline: 3px solid #2563eb;
+    outline-offset: 2px;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .reduce-motion {
+        transition: none !important;
+        animation: none !important;
+    }
+}
+
+/* Large text mode */
+.large-text {
+    font-size: 120%;
+    line-height: 1.5;
+}
+
+/* High contrast mode */
+.high-contrast {
+    --contrast-multiplier: 1.5;
+    filter: contrast(var(--contrast-multiplier));
+}
+
+/* Text Size Classes */
+.text-size-default {
+    font-size: 16px;
+}
+
+.text-size-large {
+    font-size: 18px;
+}
+
+.text-size-extra-large {
+    font-size: 20px;
+}
+
+/* Contrast Classes */
+.contrast-normal {
+    /* Default styles */
+}
+
+.contrast-high {
+    --contrast-bg: #000000;
+    --contrast-text: #FFFFFF;
+    --contrast-border: #FFFFFF;
+    filter: contrast(1.2);
+}
+
+.contrast-maximum {
+    --contrast-bg: #000000;
+    --contrast-text: #FFFFFF;
+    --contrast-border: #FFFFFF;
+    filter: contrast(1.4);
+}
+
+/* Color Mode Classes */
+.color-mode-normal {
+    /* Default colors */
+}
+
+.color-mode-deuteranopia {
+    filter: url('#deuteranopia-filter');
+}
+
+.color-mode-protanopia {
+    filter: url('#protanopia-filter');
+}
+
+.color-mode-tritanopia {
+    filter: url('#tritanopia-filter');
+}
+
+/* Apply contrast variables */
+.contrast-high, .contrast-maximum {
+    background-color: var(--contrast-bg);
+    color: var(--contrast-text);
+}
+
+.contrast-high button, .contrast-maximum button {
+    border-color: var(--contrast-border);
+}
+
+/* Ensure text remains readable in all modes */
+[class*="text-size-"] {
+    line-height: 1.5;
+    letter-spacing: 0.01em;
+}
+
+[class*="contrast-"] {
+    transition: filter 0.3s ease;
+}
+
+[class*="color-mode-"] {
+    transition: filter 0.3s ease;
+} 

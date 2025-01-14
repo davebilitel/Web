@@ -1,0 +1,6 @@
+version: "2"
+authtoken: 2qqQhsZPGOFKjWBcfaaCD4lQ2o1_27uJxwQAR47cNSV4pXTLL
+tunnels:
+  payment:
+    addr: 5001
+    proto: http 
