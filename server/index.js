@@ -22,13 +22,18 @@ const nodemailer = require('nodemailer');
 const http = require('http');
 const socketIo = require('socket.io');
 const smsRoutes = require('./routes/smsRoutes');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
+const webhookRoutes = require('./routes/webhookRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 5001;
 
 // Middleware
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: process.env.NODE_ENV === 'production' 
+        ? ['https://poweredbybilitech.com', 'https://www.poweredbybilitech.com']
+        : 'http://localhost:3000',
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization']
@@ -36,23 +41,44 @@ app.use(cors({
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(helmet({
+    contentSecurityPolicy: {
+        directives: {
+            defaultSrc: ["'self'"],
+            connectSrc: ["'self'", 
+                "https://api.poweredbybilitech.com",
+                "https://poweredbybilitech.com",
+                "https://campay.net",
+                "https://api.flutterwave.com"
+            ]
+        }
+    },
+    crossOriginEmbedderPolicy: false
+}));
+
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100 // limit each IP to 100 requests per windowMs
+});
+
+app.use('/api/', limiter);
 
 // MongoDB Connection
-mongoose.connect(process.env.MONGODB_URI)
-    .then(() => {
-        console.log('Successfully connected to MongoDB Atlas');
-    })
-    .catch(err => {
-        console.error('MongoDB Atlas connection error:', {
-            message: err.message,
-            code: err.code,
-            stack: err.stack
-        });
-        // Don't exit process in production, but log the error
-        if (process.env.NODE_ENV === 'development') {
-            process.exit(1);
-        }
-    });
+mongoose.connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    tls: true,
+    tlsInsecure: true,
+    retryWrites: true,
+    serverSelectionTimeoutMS: 5000,
+    socketTimeoutMS: 45000,
+})
+.then(() => {
+    console.log('Successfully connected to MongoDB Atlas');
+})
+.catch(err => {
+    console.error('MongoDB Atlas connection error:', err.message);
+});
 
 // Add connection event handlers
 mongoose.connection.on('error', err => {
@@ -71,84 +97,8 @@ mongoose.connection.on('reconnected', () => {
 const adminRoutes = require('./routes/adminRoutes');
 app.use('/api/admin', adminRoutes);
 
-let ngrokUrl;
-let campayToken = null;
-let tokenExpiry = null;
-let checkingInProgress = false;
-
-// Update the ngrok initialization
-const initNgrok = async () => {
-    try {
-        // Kill any existing ngrok processes
-        await ngrok.kill();
-        
-        // Connect with detailed config
-        const url = await ngrok.connect({
-            addr: PORT,
-            authtoken: process.env.NGROK_AUTH_TOKEN,
-            region: 'us',
-            configPath: './ngrok.yml'
-        });
-        
-        console.log('Ngrok tunnel established:', url);
-        return url;
-    } catch (error) {
-        console.error('Ngrok initialization error:', error);
-        // Continue even if ngrok fails - we can still process payments
-        return null;
-    }
-};
-
-// Update the server startup
-const startServer = async () => {
-    try {
-        // Connect to MongoDB
-        await mongoose.connect(process.env.MONGODB_URI);
-        console.log('Connected to MongoDB');
-
-        // Create HTTP server
-        const server = http.createServer(app);
-
-        // Initialize Socket.IO with CORS
-        const io = socketIo(server, {
-            cors: {
-                origin: "http://localhost:3000",
-                methods: ["GET", "POST"],
-                credentials: true
-            }
-        });
-
-        // Socket connection handling
-        io.on('connection', (socket) => {
-            console.log('Client connected to WebSocket');
-            
-            socket.on('disconnect', () => {
-                console.log('Client disconnected from WebSocket');
-            });
-        });
-
-        // Store io instance on app
-        app.set('io', io);
-
-        // Start server
-        server.listen(PORT, () => {
-            console.log(`Server running on port ${PORT}`);
-        });
-
-        // Initialize ngrok
-        const url = await initNgrok();
-        if (url) {
-            console.log('\n=== Webhook Configuration ===');
-            console.log('Ngrok URL:', url);
-            console.log('Webhook URL for Twilio:', `${url}/api/sms/webhook`);
-            console.log('=========================\n');
-        }
-
-    } catch (error) {
-        console.error('Server startup error:', error);
-        process.exit(1);
-    }
-};
+// Add webhook routes
+app.use('/webhook', webhookRoutes);
 
 // Use routes
 app.use('/api', cardRoutes);
@@ -156,8 +106,36 @@ app.use('/api', cardRoutes);
 // Make sure routes are added before starting the server
 app.use('/api/sms', smsRoutes);
 
-// Start the server
-startServer();
+// Create HTTP server
+const server = http.createServer(app);
+
+// Initialize Socket.IO with CORS
+const io = socketIo(server, {
+    cors: {
+        origin: process.env.NODE_ENV === 'production'
+            ? ['https://poweredbybilitech.com', 'https://www.poweredbybilitech.com']
+            : 'http://localhost:3000',
+        methods: ["GET", "POST"],
+        credentials: true
+    }
+});
+
+// Socket connection handling
+io.on('connection', (socket) => {
+    console.log('Client connected to WebSocket');
+    
+    socket.on('disconnect', () => {
+        console.log('Client disconnected from WebSocket');
+    });
+});
+
+// Store io instance on app
+app.set('io', io);
+
+// Start server
+server.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+});
 
 // Update token management
 const getNewCampayToken = async () => {
@@ -1007,5 +985,95 @@ transporter.verify()
 
 // Add the SMS routes
 app.use('/api/sms', smsRoutes);
+
+// Health check endpoint
+app.get('/api/admin/health', (req, res) => {
+    res.json({
+        status: 'ok',
+        timestamp: new Date(),
+        mongodb: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected',
+        environment: process.env.NODE_ENV || 'development'
+    });
+});
+
+// Detailed system status
+app.get('/api/admin/status', async (req, res) => {
+    try {
+        const status = {
+            server: {
+                uptime: process.uptime(),
+                timestamp: new Date(),
+                pid: process.pid,
+                memory: process.memoryUsage(),
+            },
+            database: {
+                status: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected',
+                host: mongoose.connection.host,
+                name: mongoose.connection.name,
+            },
+            email: {
+                configured: !!transporter,
+                host: process.env.SMTP_HOST,
+            },
+            environment: process.env.NODE_ENV || 'development'
+        };
+        res.json(status);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Payment services health check
+app.get('/api/admin/payment-status', async (req, res) => {
+    try {
+        const status = {
+            campay: {
+                configured: !!process.env.CAMPAY_USERNAME && !!process.env.CAMPAY_PASSWORD,
+                tokenStatus: !!campayToken && tokenExpiry > new Date()
+            },
+            flutterwave: {
+                configured: !!process.env.FLW_PUBLIC_KEY && !!process.env.FLW_SECRET_KEY
+            }
+        };
+        res.json(status);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Refresh Campay token endpoint
+app.post('/api/admin/refresh-campay-token', async (req, res) => {
+    try {
+        const token = await getNewCampayToken();
+        res.json({
+            success: true,
+            tokenStatus: !!token,
+            expiresAt: tokenExpiry
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            error: error.message
+        });
+    }
+});
+
+// Add automatic token refresh
+const refreshCampayToken = async () => {
+    try {
+        if (!campayToken || !tokenExpiry || new Date() > tokenExpiry) {
+            console.log('Refreshing Campay token...');
+            await getNewCampayToken();
+        }
+    } catch (error) {
+        console.error('Token refresh error:', error.message);
+    }
+};
+
+// Refresh token every 50 minutes
+setInterval(refreshCampayToken, 50 * 60 * 1000);
+
+// Initial token refresh on startup
+refreshCampayToken();
 
 // ... rest of the file ... 
