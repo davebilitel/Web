@@ -1,0 +1,97 @@
+{
+  "home": {
+    "hero": {
+      "title": "Cartes Virtuelles pour",
+      "subtitle": "Paiements Internationaux",
+      "description": "Créez instantanément des cartes virtuelles Visa et Mastercard. Parfait pour les achats en ligne, les abonnements et les paiements sécurisés dans le monde entier.",
+      "getVisaBtn": "Obtenir une Carte Visa",
+      "getMastercardBtn": "Obtenir une Carte Mastercard"
+    },
+    "stats": {
+      "activeUsers": "Utilisateurs Actifs",
+      "cardsCreated": "Cartes Créées",
+      "countries": "Pays",
+      "successRate": "Taux de Réussite"
+    },
+    "pricing": {
+      "title": "Choisissez Votre Carte Virtuelle",
+      "subtitle": "Accédez instantanément à des cartes virtuelles sécurisées pour vos paiements en ligne",
+      "oneTime": "Paiement unique • Pas de frais mensuels • Pas de frais cachés",
+      "features": {
+        "noMonthlyFees": "Pas de Frais Mensuels",
+        "instantCard": "Génération Instantanée",
+        "worldwide": "Acceptation Mondiale",
+        "notifications": "Notifications en Temps Réel",
+        "liability": "Protection Zéro Responsabilité",
+        "secure": "Transactions Sécurisées",
+        "support": "Support Premium",
+        "enhanced": "Sécurité Renforcée",
+        "global": "Acceptation Globale",
+        "alerts": "Alertes en Temps Réel",
+        "protection": "Protection des Achats",
+        "priority": "Support Prioritaire"
+      },
+      "getStarted": "Commencer",
+      "securityNote": "Toutes les cartes incluent nos fonctionnalités de sécurité premium et la protection contre la fraude"
+    },
+    "howItWorks": {
+      "steps": {
+        "choose": {
+          "title": "Choisissez Votre Carte",
+          "description": "Sélectionnez entre les cartes virtuelles Visa ou Mastercard selon vos besoins"
+        },
+        "payment": {
+          "title": "Effectuez le Paiement",
+          "description": "Payez avec votre méthode préférée - Mobile Money ou Virement Bancaire"
+        },
+        "getCard": {
+          "title": "Recevez Votre Carte",
+          "description": "Recevez les détails de votre carte virtuelle instantanément après confirmation du paiement"
+        },
+        "start": {
+          "title": "Commencez à Utiliser",
+          "description": "Utilisez votre carte immédiatement pour les achats en ligne et les abonnements"
+        }
+      },
+      "clickToFlip": "Cliquez pour retourner la carte"
+    }
+  },
+  "nav": {
+    "about": "À Propos",
+    "contact": "Contact"
+  },
+  "footer": {
+    "description": "Cartes virtuelles sécurisées pour les paiements en ligne mondiaux. Activation instantanée et acceptation mondiale.",
+    "company": "Entreprise",
+    "terms": "Conditions d'Utilisation",
+    "privacy": "Politique de Confidentialité",
+    "products": "Produits",
+    "mastercard": "Mastercard Virtuelle",
+    "visacard": "Visa Virtuelle",
+    "support": "Support",
+    "faq": "FAQ",
+    "help": "Centre d'Aide",
+    "rights": "Tous droits réservés",
+    "social": {
+      "facebook": "Suivez-nous sur Facebook",
+      "twitter": "Suivez-nous sur Twitter"
+    }
+  },
+  "header": {
+    "menu": {
+      "home": "Accueil",
+      "visa": "Visa",
+      "mastercard": "Mastercard",
+      "balance": "Solde",
+      "topUp": "Recharger",
+      "faq": "FAQ",
+      "about": "À Propos",
+      "contact": "Contact"
+    },
+    "openMenu": "Ouvrir le menu",
+    "closeMenu": "Fermer le menu",
+    "tryDemo": "Essayer la Démo Interactive",
+    "darkMode": "Mode Sombre",
+    "lightMode": "Mode Clair"
+  }
+} 

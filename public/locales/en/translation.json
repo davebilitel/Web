@@ -1,0 +1,52 @@
+{
+    "nav": {
+        "home": "Home",
+        "about": "About Us",
+        "contact": "Contact"
+    },
+    "hero": {
+        "title": "Virtual Cards Made Easy",
+        "subtitle": "Get instant access to secure virtual cards for your online payments",
+        "getStarted": "Get Started"
+    },
+    "features": {
+        "title": "Why Choose Our Cards?",
+        "subtitle": "Experience the best in virtual card services",
+        "global": "Global Access",
+        "secure": "Secure Transactions",
+        "instant": "Instant Delivery"
+    },
+    "card": {
+        "validThru": "VALID THRU",
+        "viewCvv": "View Sample CVV",
+        "backToFront": "Back to front"
+    },
+    "common": {
+        "loading": "Loading...",
+        "error": "An error occurred",
+        "success": "Success",
+        "tryAgain": "Try Again",
+        "contactSupport": "Contact Support"
+    },
+    "footer": {
+        "company": "Company",
+        "products": "Products",
+        "support": "Support",
+        "terms": "Terms of Service",
+        "privacy": "Privacy Policy",
+        "mastercard": "Mastercard",
+        "visacard": "Visa Card",
+        "faq": "FAQ",
+        "help": "Help Center"
+    },
+    "payment": {
+        "failed": {
+            "title": "Payment Failed",
+            "message": "We couldn't process your payment. Please try again or contact support if the problem persists."
+        },
+        "success": {
+            "title": "Payment Successful",
+            "message": "Your payment has been processed successfully."
+        }
+    }
+} 

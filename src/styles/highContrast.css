@@ -1,0 +1,36 @@
+.high-contrast {
+    /* Text and background colors */
+    --text-primary: #000000;
+    --text-secondary: #FFFFFF;
+    --bg-primary: #FFFFFF;
+    --bg-secondary: #000000;
+    
+    /* Input styles */
+    --input-border: 3px solid #000000;
+    --input-focus: 3px solid #0000FF;
+    
+    /* Button styles */
+    --button-bg: #000000;
+    --button-text: #FFFFFF;
+    --button-hover: #0000FF;
+    
+    /* Focus indicators */
+    --focus-outline: 3px solid #0000FF;
+}
+
+.high-contrast button:focus,
+.high-contrast input:focus,
+.high-contrast select:focus {
+    outline: var(--focus-outline);
+    outline-offset: 2px;
+}
+
+.high-contrast button {
+    background-color: var(--button-bg);
+    color: var(--button-text);
+}
+
+.high-contrast input,
+.high-contrast select {
+    border: var(--input-border);
+} 

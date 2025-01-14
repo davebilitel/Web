@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Payment Form</title>
+    <style>
+        .form-container {
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+        }
+
+        .loading-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            text-align: center;
+            z-index: 1001;
+            max-width: 80%;
+            width: 400px;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #4CAF50;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        .ussd-instructions {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 4px;
+        }
+
+        .ussd-code {
+            font-size: 24px;
+            font-weight: bold;
+            color: #4CAF50;
+            margin: 10px 0;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Overlay -->
+    <div id="overlay" class="overlay">
+        <div class="loading-container">
+            <div class="spinner"></div>
+            <h3>Processing Payment</h3>
+            <div id="ussdInstructions" class="ussd-instructions" style="display: none;">
+                <p>Please dial the following USSD code on your phone:</p>
+                <div id="ussdCode" class="ussd-code"></div>
+                <p>Follow the prompts to complete your payment</p>
+                <small>The page will automatically redirect once payment is complete</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-container">
+        <h2>Payment Form</h2>
+        <form id="paymentForm">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone Number:</label>
+                <input type="tel" 
+                       id="phone" 
+                       name="phone" 
+                       pattern="237[0-9]{9}"
+                       placeholder="237XXXXXXXXX"
+                       title="Please enter a valid Cameroon phone number starting with 237"
+                       required>
+                <small>Format: 237XXXXXXXXX (Cameroon number)</small>
+            </div>
+            <button type="submit">Submit Payment</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('paymentForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Show loading overlay
+            document.getElementById('overlay').style.display = 'block';
+            
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value
+            };
+
+            try {
+                const response = await fetch('/initiate-payment', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const data = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(data.error || 'Payment initiation failed');
+                }
+                
+                console.log('Payment response:', data);
+                
+                if (data.ussd_code) {
+                    // Show USSD instructions
+                    document.getElementById('ussdInstructions').style.display = 'block';
+                    document.getElementById('ussdCode').textContent = data.ussd_code;
+                    
+                    // Start polling for payment status
+                    pollPaymentStatus(data.reference);
+                } else if (data.payment_url) {
+                    window.location.href = data.payment_url;
+                } else {
+                    throw new Error('Invalid payment response');
+                }
+            } catch (error) {
+                console.error('Payment Error:', error);
+                document.getElementById('overlay').style.display = 'none';
+                alert(error.message || 'Payment initiation failed');
+            }
+        });
+
+        async function pollPaymentStatus(reference) {
+            try {
+                const response = await fetch(`/check-payment-status/${reference}`);
+                const data = await response.json();
+
+                if (data.status === 'SUCCESSFUL') {
+                    window.location.href = '/success';
+                } else if (data.status === 'FAILED') {
+                    window.location.href = '/failed';
+                } else {
+                    // Continue polling after 5 seconds
+                    setTimeout(() => pollPaymentStatus(reference), 5000);
+                }
+            } catch (error) {
+                console.error('Status check failed:', error);
+                // Continue polling even if there's an error
+                setTimeout(() => pollPaymentStatus(reference), 5000);
+            }
+        }
+    </script>
+</body>
+</html> 

@@ -1,0 +1,97 @@
+{
+  "home": {
+    "hero": {
+      "title": "Virtual Cards for",
+      "subtitle": "Global Payments",
+      "description": "Get instant access to virtual cards. Shop confidently at online retailers and subscription services globally.",
+      "getVisaBtn": "Get Visa Card",
+      "getMastercardBtn": "Get Mastercard"
+    },
+    "stats": {
+      "activeUsers": "Active Users",
+      "cardsCreated": "Cards Created",
+      "countries": "Countries",
+      "successRate": "Success Rate"
+    },
+    "pricing": {
+      "title": "Choose Your Virtual Card",
+      "subtitle": "Get instant access to secure virtual cards for your online payments",
+      "oneTime": "One-time payment • No monthly fees • No hidden charges",
+      "features": {
+        "noMonthlyFees": "No Monthly Fees",
+        "instantCard": "Instant Card Generation",
+        "worldwide": "Worldwide Acceptance",
+        "notifications": "Real-time Notifications",
+        "liability": "Zero Liability Protection",
+        "secure": "Secure Transactions",
+        "support": "Premium Support",
+        "enhanced": "Enhanced Security",
+        "global": "Global Acceptance",
+        "alerts": "Real-time Alerts",
+        "protection": "Purchase Protection",
+        "priority": "Priority Support"
+      },
+      "getStarted": "Get Started",
+      "securityNote": "All cards include our premium security features and fraud protection"
+    },
+    "howItWorks": {
+      "steps": {
+        "choose": {
+          "title": "Choose Your Card",
+          "description": "Select between Visa or Mastercard virtual cards based on your needs"
+        },
+        "payment": {
+          "title": "Make Payment",
+          "description": "Pay using your preferred payment method - Mobile Money or Bank Transfer"
+        },
+        "getCard": {
+          "title": "Get Your Card",
+          "description": "Receive your virtual card details instantly after payment confirmation"
+        },
+        "start": {
+          "title": "Start Using",
+          "description": "Use your card immediately for online purchases and subscriptions"
+        }
+      },
+      "clickToFlip": "Click card to flip"
+    }
+  },
+  "nav": {
+    "about": "About Us",
+    "contact": "Contact"
+  },
+  "footer": {
+    "description": "Secure virtual cards for global online payments. Instant activation and worldwide acceptance.",
+    "company": "Company",
+    "terms": "Terms of Service",
+    "privacy": "Privacy Policy",
+    "products": "Products",
+    "mastercard": "Mastercard Virtual",
+    "visacard": "Visa Virtual",
+    "support": "Support",
+    "faq": "FAQ",
+    "help": "Help Center",
+    "rights": "All rights reserved",
+    "social": {
+      "facebook": "Follow us on Facebook",
+      "twitter": "Follow us on Twitter"
+    }
+  },
+  "header": {
+    "menu": {
+      "home": "Home",
+      "visa": "Visa",
+      "mastercard": "Mastercard",
+      "balance": "Balance",
+      "topUp": "Top Up",
+      "faq": "FAQ",
+      "about": "About",
+      "contact": "Contact"
+    },
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "tryDemo": "Try Interactive Demo",
+    "darkMode": "Dark Mode",
+    "lightMode": "Light Mode"
+  }
+} 

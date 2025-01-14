@@ -1,0 +1,50 @@
+/* Mobile-First Media Queries */
+@media (max-width: 768px) {
+    html {
+        touch-action: manipulation;
+        -webkit-text-size-adjust: 100%;
+    }
+
+    /* Optimize touch targets */
+    button, 
+    a,
+    input,
+    select {
+        min-height: 48px;
+        min-width: 48px;
+        padding: 12px;
+        margin: 8px 0;
+    }
+
+    /* Improve readability */
+    p, li {
+        font-size: 16px;
+        line-height: 1.6;
+    }
+
+    /* Prevent horizontal scrolling */
+    .container {
+        width: 100%;
+        max-width: 100%;
+        padding-left: 16px;
+        padding-right: 16px;
+        overflow-x: hidden;
+    }
+}
+
+/* Optimize images for mobile */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Remove tap highlight on mobile */
+* {
+    -webkit-tap-highlight-color: transparent;
+} 
