@@ -42,6 +42,11 @@ router.post('/top-up-orders', async (req, res) => {
         // Handle different payment methods
         if (paymentMethod === 'CAMPAY') {
             try {
+                // Get webhook URL based on environment
+                const webhookUrl = process.env.NODE_ENV === 'production'
+                    ? process.env.CAMPAY_WEBHOOK_URL
+                    : `${req.protocol}://${req.get('host')}/webhook/campay`;
+
                 // Validate and format phone number
                 let phoneNumber = phone.replace(/\D/g, '');
                 if (!phoneNumber.startsWith('237')) {
@@ -68,7 +73,8 @@ router.post('/top-up-orders', async (req, res) => {
                     description: `Card Top Up - ${cardId}`,
                     external_reference: order._id.toString(),
                     redirect_url: `${process.env.BASE_URL}/top-up-success`,
-                    return_url: `${process.env.BASE_URL}/top-up-success`
+                    return_url: `${process.env.BASE_URL}/top-up-success`,
+                    webhook_url: webhookUrl
                 }, {
                     headers: {
                         'Authorization': `Token ${token}`,
